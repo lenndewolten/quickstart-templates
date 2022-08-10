@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>MinimalApi.Template</RootNamespace>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileFile>../../deployment/Dockerfile</DockerfileFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE,enableHealthCheck, enableOpenApi, usePrometheus</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+	<!--#if (usePrometheus) -->
+	<PackageReference Include="prometheus-net.AspNetCore" Version="6.0.0" />
+	<!--#if (enableHealthCheck) -->
+	<PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="6.0.0" />
+	<!--#endif -->
+	<!--#endif -->
+	<!--#if (enableOpenApi) -->
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0-preview.6.22330.3" />
+	<!--#endif -->
+  </ItemGroup>
+
+  <ItemGroup>
+  	<InternalsVisibleTo Include="$(AssemblyName).IntegrationTests" />
+	<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
+  </ItemGroup>
+</Project>

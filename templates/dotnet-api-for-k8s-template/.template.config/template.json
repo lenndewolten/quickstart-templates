@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Lennart ten Wolde",
+  "classifications": ["API", "ASP.NET", "Kubernetes"],
+  "identity": "lenndewolten.kubernetes.api",
+  "name": ".NET Core API for kubernetes",
+  "shortName": "k8sapi",
+
+  "defaultName": "Kubernetes.Api.Template",
+  "sourceName": "Kubernetes.Api.Template",
+  "preferNameDirectory": true,
+  "primaryOutputs": [
+    {
+      "path": "src/Kubernetes.Api.Template/Kubernetes.Api.Template.csproj"
+    },
+    {
+      "path": "tests/Kubernetes.Api.Template.IntegrationTests/Kubernetes.Api.Template.IntegrationTests.csproj"
+    }
+  ],
+  "symbols": {
+    "ProjectFilesRename": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "ValueAfterLastDot",
+      "replaces": "Kubernetes.Api.Template",
+      "fileRename": "Kubernetes.Api.Template",
+      "description": "A value derived from the 'name' param, used to file content."
+    },
+    "disable-open-api": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Disable OpenAPI (Swagger) support.",
+      "defaultValue": "false"
+    },
+    "enableOpenApi": {
+      "type": "computed",
+      "value": "(!disable-open-api)"
+    },
+    "disable-health-check": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Disable health checks.",
+      "defaultValue": "false"
+    },
+    "enableHealthCheck": {
+      "type": "computed",
+      "value": "(!disable-health-check)"
+    },
+    "use-prometheus": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Use prometheus for metrics",
+      "defaultValue": "false"
+    },
+    "usePrometheus": {
+      "type": "computed",
+      "value": "(use-prometheus)"
+    },
+    "disable-api-versioning": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Disable api route versioning",
+      "defaultValue": "false"
+    },
+    "enableApiVersioning": {
+      "type": "computed",
+      "value": "(!disable-api-versioning)"
+    },
+    "no-restore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [".vs/**", "bin/**", "obj/**", "README.md"]
+        }
+      ]
+    }
+  ],
+  "postActions": [
+    {
+      "description": "Restore packages required by this project.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore'"
+        }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true
+    }
+  ]
+}

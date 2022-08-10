@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Lennart ten Wolde",
+  "classifications": ["API", "ASP.NET", "Minimal Api"],
+  "identity": "lenndewolten.minimal.api",
+  "name": ".NET Core Minimal API",
+  "shortName": "minimalapi",
+
+  "defaultName": "MinimalApi.Template",
+  "sourceName": "MinimalApi.Template",
+  "preferNameDirectory": true,
+  "primaryOutputs": [
+    {
+      "path": "src/MinimalApi.Template/MinimalApi.Template.csproj"
+    },
+    {
+      "path": "tests/MinimalApi.Template.IntegrationTests/MinimalApi.Template.IntegrationTests.csproj"
+    },
+    {
+      "path": "tests/MinimalApi.Template.UnitTests/MinimalApi.Template.UnitTests.csproj"
+    }
+  ],
+  "symbols": {
+    "ProjectFilesRename": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "ValueAfterLastDot",
+      "replaces": "MinimalApi.Template",
+      "fileRename": "MinimalApi.Template",
+      "description": "A value derived from the 'name' param, used to file content."
+    },
+    "disable-open-api": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Disable OpenAPI (Swagger) support.",
+      "defaultValue": "false"
+    },
+    "enableOpenApi": {
+      "type": "computed",
+      "value": "(!disable-open-api)"
+    },
+    "disable-health-check": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Disable health checks.",
+      "defaultValue": "false"
+    },
+    "enableHealthCheck": {
+      "type": "computed",
+      "value": "(!disable-health-check)"
+    },
+    "deploy-on-kubernetes": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Add Helm charts & deployment files",
+      "defaultValue": "false"
+    },
+    "use-prometheus": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Use prometheus for metrics",
+      "defaultValue": "true"
+    },
+    "usePrometheus": {
+      "type": "computed",
+      "value": "(use-prometheus)"
+    },
+    "no-restore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [".vs/**", "bin/**", "obj/**", "README.md"]
+        },
+        {
+          "condition": "(!deploy-on-kubernetes)",
+          "exclude": ["deployment/**"]
+        },
+        {
+          "condition": "(!deploy-on-kubernetes)",
+          "include": ["deployment/Dockerfile"]
+        }
+      ]
+    }
+  ],
+  "postActions": [
+    {
+      "description": "Restore packages required by this project.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore'"
+        }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true
+    }
+  ]
+}
