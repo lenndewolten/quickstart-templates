@@ -20,8 +20,8 @@ dotnet new <shortname> --name <projectname>
 
 ## Templates
 
-- [.NET Core API for Kubernetes](.\templates\dotnet-api-for-k8s-template\README.md)
-- [.NET Core Minimal API - .NET 7 Preview](.\templates\dotnet-minimal-api-template\README.md)
+- [.NET Core API for Kubernetes](templates/dotnet-api-for-k8s-template/README.md)
+- [.NET Core Minimal API - .NET 7 Preview](templates/dotnet-minimal-api-template/README.md)
 
 ## Roadmap
 - [ ] NuGet installation support
